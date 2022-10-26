@@ -9,6 +9,8 @@ import net.bytebuddy.asm.Advice;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -17,6 +19,10 @@ public class Todo {
     @Id @GeneratedValue
     @Column(name = "todo_id")
     private Long id;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(nullable = false)
     private String title;
@@ -29,7 +35,8 @@ public class Todo {
     private TodoStatus status; //[todo, doing, done]
 
     @Builder
-    public Todo(String title, String describe) {
+    public Todo(User user, String title, String describe) {
+        this.user = user;
         this.title = title;
         this.describe = describe;
         this.createDate = LocalDateTime.now();
