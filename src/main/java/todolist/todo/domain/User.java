@@ -29,9 +29,10 @@ public class User extends TimeEntity {
     private String email; //email
 
     //==회원 정보 수정==//
-    public void modify(String nickname, String password) {
+    public void modify(String nickname, String password, String email) {
         this.nickname = nickname;
         this.password = password;
+        this.email = email;
     }
 
     public User updateModifiedDate() {
