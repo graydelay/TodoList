@@ -1,56 +1,41 @@
 package todolist.todo.domain;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Getter
-public class User {
+public class User extends TimeEntity {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id; //pk
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, length = 30)
     private String username; //id
 
     @Column(nullable = false)
     private String nickname; //닉네임
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String password; //password
+
+    @Column(nullable = false, length = 50)
     private String email; //email
 
-    private LocalDateTime joinDate; //가입일
-    private LocalDateTime modifiedDate; //수정일
-
-    @Builder
-    public User(String username, String nickname, String password, String email) {
-        this.username = username;
+    //==회원 정보 수정==//
+    public void modify(String nickname, String password) {
         this.nickname = nickname;
         this.password = password;
-        this.email = email;
-        this.joinDate = LocalDateTime.now();
     }
 
-    //==비즈니스 로직==//
-    public void updatePassword(String password) {
-        if (password != null && !password.isEmpty()) {
-            this.password = password;
-            this.modifiedDate = LocalDateTime.now();
-        }
-    }
-
-    public void updateEmail(String email) {
-        if (email != null && !email.isEmpty()) {
-            this.email = email;
-            this.modifiedDate = LocalDateTime.now();
-        }
+    public User updateModifiedDate() {
+        this.onPreUpdate();
+        return this;
     }
 }
