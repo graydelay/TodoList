@@ -40,7 +40,7 @@ public class TodoService {
 
     public Object findByUser(UserSessionDto userSessionDto) {
         User user = userRepository.findByNickname(userSessionDto.getNickname());
-        List<Todo> todos = todoRepository.findByUserOrderById(user);
+        List<Todo> todos = todoRepository.findByUserOrderByIdDesc(user);
         List<TodoResponseDto> dtos = new ArrayList<>();
         for (Todo todo : todos) {
             dtos.add(new TodoResponseDto(todo));
@@ -50,7 +50,7 @@ public class TodoService {
 
     public Object findByUserRecent(UserSessionDto userSessionDto) {
         User user = userRepository.findByNickname(userSessionDto.getNickname());
-        List<Todo> todos = todoRepository.findFirstByUserOrderByIdDesc(user);
+        List<Todo> todos = todoRepository.findFirstByUserOrderByCreatedDateDesc(user);
         List<TodoResponseDto> dtos = new ArrayList<>();
         for (Todo todo : todos) {
             dtos.add(new TodoResponseDto(todo));
