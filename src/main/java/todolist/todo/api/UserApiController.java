@@ -12,9 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.beanvalidation.CustomValidatorBean;
 import org.springframework.web.bind.annotation.*;
+import todolist.todo.config.auth.LoginUser;
 import todolist.todo.domain.User;
 import todolist.todo.dto.UserRequestDto;
 import todolist.todo.dto.UserResponseDto;
+import todolist.todo.dto.UserSessionDto;
 import todolist.todo.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,17 +42,6 @@ public class UserApiController {
     }
 
     /**
-     * 로그인
-     */
-    @GetMapping("/auth/login")
-    public void login(@RequestParam(value = "error", required = false) String error,
-                      @RequestParam(value = "exception", required = false) String exception,
-                      Model model) {
-        model.addAttribute("error", error);
-        model.addAttribute("exception", exception);
-    }
-
-    /**
      * 로그아웃
      */
     @GetMapping("/logout")
@@ -64,10 +55,18 @@ public class UserApiController {
     /**
      * 회원 정보 수정
      */
-    @PutMapping("/auth/user")
-    public UserResponseDto modify(@RequestBody UserRequestDto dto) {
-        UserResponseDto modify = userService.modify(dto);
+    @PutMapping("/auth/user/{id}")
+    public UserResponseDto modify(@PathVariable Long id, @RequestBody UserRequestDto dto) {
+        UserResponseDto modify = userService.modify(id, dto);
 
         return modify;
+    }
+
+    /**
+     * 회원 삭제
+     */
+    @DeleteMapping("/auth/user/{id}")
+    public void delete(@PathVariable Long id) {
+        userService.delete(id);
     }
 }

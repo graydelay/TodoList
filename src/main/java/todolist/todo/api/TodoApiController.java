@@ -32,4 +32,17 @@ public class TodoApiController {
         return ResponseEntity.ok(todoService.findByUser(user));
     }
 
+    /* UPDATE */
+    @PutMapping("/todo/{id}")
+    public ResponseEntity update(@PathVariable Long id, @RequestBody TodoRequestDto dto) {
+        todoService.update(id, dto);
+        return ResponseEntity.ok(id);
+    }
+
+    /* DELETE */
+    @DeleteMapping("/todo/{id}")
+    public ResponseEntity delete(@PathVariable Long id) {
+        todoService.delete(id);
+        return ResponseEntity.ok(id);
+    }
 }

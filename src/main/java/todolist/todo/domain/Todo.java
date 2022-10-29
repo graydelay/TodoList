@@ -36,10 +36,9 @@ public class Todo extends TimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    //==비즈니스 로직==//
-    @PrePersist
-    public void onPrePersist() {
-        status = TodoStatus.TODO;
+    public Todo updateModifiedDate() {
+        this.onPreUpdate();
+        return this;
     }
 
     /* 수정 */
