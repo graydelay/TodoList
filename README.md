@@ -150,7 +150,7 @@ GET /todo
     "createDate": "2022-10-30T00:19:59.796649",
     "modifiedDate": "2022-10-30T00:19:59.796649",
     "userId": 3
-  },...
+  }
 ]
 ```
 
@@ -234,15 +234,15 @@ id
 #### todo
 - todo list에 대한 정보를 가지고 있음
 
-| 컬럼명           | 데이터 타입   | 조건           | 설명     |
-|---------------|----------|--------------|--------|
-| id            | bigint   | PK           | 고유 값   |
-| title         | varchar  | not null     | 제목     |
-| describe      | text     | not null     | 설명     |
-| write         | varchar  | not null     | 작성자    |
-| user_id       | bigint   | FK,not null | 작성자 FK |
-| created_date  | datetime | not null     | 생성일    |
-| modified_date | datetime | not null     | 수정일    |
+| 컬럼명           | 데이터 타입   | 조건          | 설명     |
+|---------------|----------|-------------|--------|
+| id            | bigint   | PK          | 고유 값   |
+| title         | varchar  | not null    | 제목     |
+| describe      | text     | not null    | 설명     |
+| write         | varchar  | not null    | 작성자    |
+| user_id       | bigint   | FK,not null | 작성자 FK |
+| created_date  | datetime | not null    | 생성일    |
+| modified_date | datetime | not null    | 수정일    |
 
 
 <!-- ### 요구 사항 및 문제해결 전략 -->
