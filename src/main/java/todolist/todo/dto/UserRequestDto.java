@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import todolist.todo.domain.Role;
 import todolist.todo.domain.User;
 
 import javax.validation.constraints.NotBlank;
@@ -27,6 +28,8 @@ public class UserRequestDto {
     @NotBlank
     private String email;
 
+    private Role role;
+
     /**
      * DTO -> Entity 변환
      */
@@ -37,6 +40,7 @@ public class UserRequestDto {
                 .password(password)
                 .nickname(nickname)
                 .email(email)
+                .role(role.USER)
                 .build();
     }
 }

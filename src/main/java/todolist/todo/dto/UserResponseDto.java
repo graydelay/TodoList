@@ -1,6 +1,7 @@
 package todolist.todo.dto;
 
 import lombok.Data;
+import todolist.todo.domain.Role;
 import todolist.todo.domain.User;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ public class UserResponseDto {
     private final String nickname;
     private final String email;
     private final LocalDateTime modifiedDate;
+    private final Role role;
 
     /**
      * Entity -> Dto
@@ -22,6 +24,7 @@ public class UserResponseDto {
         this.username = user.getUsername();
         this.nickname = user.getNickname();
         this.email = user.getEmail();
+        this.role = user.getRole();
         this.modifiedDate = user.getModifiedDate();
     }
 }

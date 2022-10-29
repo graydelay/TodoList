@@ -28,6 +28,10 @@ public class User extends TimeEntity {
     @Column(nullable = false, length = 50)
     private String email; //email
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
     //==회원 정보 수정==//
     public void modify(String nickname, String password, String email) {
         this.nickname = nickname;
@@ -38,5 +42,9 @@ public class User extends TimeEntity {
     public User updateModifiedDate() {
         this.onPreUpdate();
         return this;
+    }
+
+    public String getRoleValue() {
+        return this.role.getValue();
     }
 }

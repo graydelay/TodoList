@@ -5,14 +5,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import todolist.todo.domain.User;
+import todolist.todo.dto.UserResponseDto;
 import todolist.todo.dto.UserSessionDto;
 import todolist.todo.repository.UserRepository;
 
 import javax.servlet.http.HttpSession;
 
 @RequiredArgsConstructor
-@Component
+@Service
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
