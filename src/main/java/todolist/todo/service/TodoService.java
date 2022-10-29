@@ -48,6 +48,16 @@ public class TodoService {
         return dtos;
     }
 
+    public Object findByUserRecent(UserSessionDto userSessionDto) {
+        User user = userRepository.findByNickname(userSessionDto.getNickname());
+        List<Todo> todos = todoRepository.findFirstByUserOrderByIdDesc(user);
+        List<TodoResponseDto> dtos = new ArrayList<>();
+        for (Todo todo : todos) {
+            dtos.add(new TodoResponseDto(todo));
+        }
+        return dtos;
+    }
+
     /* UPDATE */
     @Transactional
     public void update(Long id, TodoRequestDto dto) {
@@ -65,4 +75,5 @@ public class TodoService {
 
         todoRepository.delete(todo);
     }
+
 }

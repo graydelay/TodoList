@@ -32,6 +32,11 @@ public class TodoApiController {
         return ResponseEntity.ok(todoService.findByUser(user));
     }
 
+    @GetMapping("/todo/recent")
+    public ResponseEntity readRecent(@LoginUser UserSessionDto user) {
+        return ResponseEntity.ok(todoService.findByUserRecent(user));
+    }
+
     /* UPDATE */
     @PutMapping("/todo/{id}")
     public ResponseEntity update(@PathVariable Long id, @RequestBody TodoRequestDto dto) {
