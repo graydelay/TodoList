@@ -48,7 +48,7 @@ public class SecutiryConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/auth/**", "/api/**")
+                .antMatchers("/", "/auth/**", "/todo/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

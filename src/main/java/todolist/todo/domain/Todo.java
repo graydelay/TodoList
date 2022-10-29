@@ -1,75 +1,51 @@
 package todolist.todo.domain;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import net.bytebuddy.asm.Advice;
+import lombok.*;
 
 import javax.persistence.*;
+
 import java.time.LocalDateTime;
 
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Getter
-public class Todo {
+public class Todo extends TimeEntity {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "todo_id")
     private Long id;
+
+    @Column(nullable = false, length = 500)
+    private String title;
+
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String describe;
+
+    @Column(nullable = false)
+    private String writer;
+
+    @Enumerated(EnumType.STRING)
+    private TodoStatus status; //[todo, doing, done]
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(nullable = false)
-    private String title;
-    private String describe;
+    //==비즈니스 로직==//
+    @PrePersist
+    public void onPrePersist() {
+        status = TodoStatus.TODO;
+    }
 
-    private LocalDateTime createDate;
-    private LocalDateTime modifiedDate;
-
-    @Enumerated(EnumType.STRING)
-    private TodoStatus status; //[todo, doing, done]
-
-    @Builder
-    public Todo(User user, String title, String describe) {
-        this.user = user;
+    /* 수정 */
+    public void update(String title, String describe, TodoStatus status) {
         this.title = title;
         this.describe = describe;
-        this.createDate = LocalDateTime.now();
-        this.modifiedDate = LocalDateTime.now();
-        this.status = TodoStatus.TODO;
-    }
-
-    //==비즈니스 로직==//
-    /**
-     * 내용 변경
-     */
-    public void update(String title, String describe) {
-        Boolean changed = false;
-
-        if (title != null && !title.isEmpty()) {
-            this.title = title;
-            changed = true;
-        }
-        if (describe != null && !describe.isEmpty()) {
-            this.describe = describe;
-            changed = true;
-        }
-
-        if (changed) {
-            this.modifiedDate = LocalDateTime.now();
-        }
-    }
-
-    /**
-     * 상태 변경
-     */
-    public void changeStatus(TodoStatus status) {
         this.status = status;
-        this.modifiedDate = LocalDateTime.now();
     }
 }
