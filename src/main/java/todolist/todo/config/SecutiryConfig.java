@@ -48,17 +48,15 @@ public class SecutiryConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/auth/**", "/todo/**")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
+                    .antMatchers("/", "/auth/**", "/todo/**").permitAll()
+                    .anyRequest().authenticated()
                 .and()
                     .formLogin()
                     .loginProcessingUrl("/loginProc")
                     .defaultSuccessUrl("/")
                 .and()
                     .logout()
-                    .logoutSuccessUrl("/")
-                    .invalidateHttpSession(true);
+                        .logoutSuccessUrl("/")
+                        .invalidateHttpSession(true);
     }
 }
